@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>all</title>
+	<script src = "/static/js/jquery-3.2.1.js"></script>
+	<script>
+		$(function(){
+			$(".bt").click(function(){
+				// console.log(this);
+				// console.log(this.id);
+				var postData = {id: this.id};
+				console.log(postData);
+				$.ajax({
+					url: "/all",
+					type: "DELETE",
+					contentType: "application/json",
+					data: JSON.stringify(postData),
+					success: function(data){
+						// console.log(data);
+						if (data === "true") {
+							window.location.reload();
+						} else {							
+							$(".del").html("删除失败");
+						}
+					}
+				});
+			});
+			$(".bt1").click(function() {
+				// var delData = {id: this.id};
+				// console.log(delData.id);
+
+				// console.log(this.id);
+				window.location.href = "modify?id="+this.id;
+			});
+		})
+	</script>
+</head>
+<body>
+	<h1>个人信息</h1>
+	<button><a href="/add">新增信息</a></button>
+	<p class="del"></p>
+	{% for key in data %}
+		<h2>your message</h2>
+		<button class="bt"; {{ "id=" + key._id }}>删除</button>
+		<button class="bt1"; {{ "id=" + key._id }}>修改</button>
+		<p>姓名：{{ key.name }}</p>
+		<p>年龄：{{ key.age }}</p>
+	{% endfor %}
+</body>
+</html>

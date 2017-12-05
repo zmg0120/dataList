@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>post</title>
+	<script src = "/static/js/jquery-3.2.1.js"></script>
+	<script>
+		$(function(){
+			$(":button").click(function(){
+				var name = $("#user").val();
+				var age = $("#age").val();
+
+				var postDate = {
+					"name": name,
+					"age": age
+				}
+				var sendData = JSON.stringify(postDate);
+				// console.log(sendData);
+				$.ajax({
+					url: "/add",
+					contentType:"application/json",
+					type: "POST",
+					data: sendData,
+					success: function(data) {
+						console.log("SUCCESS");
+						console.log(data);
+						// $("#div1").html(data);
+						window.location.href = "/all";
+					}
+				})
+			});
+		})
+	</script>
+</head>
+<body>
+	<div id = "div1"></div>
+	<h2>输入个人信息</h2>
+	<form action="">
+		<label for="user">姓名
+			<input type="text" id = "user"><br>
+		</label>
+		<br>
+		<label for="age">年龄
+			<input type="text" id = "age"><br><br>
+		</label>
+		<input type="button" value="提交数据">
+	</form>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>修改post</title>
+	<script src = "/static/js/jquery-3.2.1.js"></script>
+	<script>
+		$(function(){
+			$(":button").click(function(){
+				var name = $("#user").val();
+				var age = $("#age").val();
+
+				var postDate = {
+					"id": this.id,
+					"name": name,
+					"age": age
+				}
+				var sendData = JSON.stringify(postDate);
+				// console.log(sendData);
+				// console.log(this.id);
+				$.ajax({
+					url: "/modify",
+					contentType:"application/json",
+					type: "PUT",
+					data: sendData,
+					success: function(data) {
+						console.log("SUCCESS");
+						console.log(data);
+						if (data === "true") {
+							window.location.href = "/all";	
+						} else {
+							alert("修改失败");
+						}
+						// $("#div1").html(data);	
+					}
+				})
+			});
+		})
+	</script>
+</head>
+<body>
+	<div id = "div1"></div>
+	<h2>修改个人信息</h2>
+	<form action="">
+		<label for="user">姓名：
+			<input type="text" id = "user" {{ "value="+ data.name }}><br>
+		</label>
+		<br>
+		<label for="age">年龄：
+			<input type="text" id = "age" {{ "value="+ data.age }}><br><br>
+		</label>
+		<input type="button" value="提交数据" {{ "id="+ data._id }}>
+	</form>
+
+</body>
+</html>
